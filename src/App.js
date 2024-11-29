@@ -24,6 +24,10 @@ function App() {
         body: formData,
       });
 
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
       const result = await response.json();
       setMessage(result.message || "File uploaded successfully.");
     } catch (error) {
