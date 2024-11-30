@@ -19,7 +19,7 @@ function App() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`/api/upload_image`, {
+      const response = await fetch(`/api/src/functions/upload_image`, {
         method: "POST",
         body: formData,
       });
