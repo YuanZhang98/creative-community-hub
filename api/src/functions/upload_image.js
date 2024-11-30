@@ -11,6 +11,7 @@ app.http("upload_image", {
   authLevel: "anonymous",
   handler: async (request, context) => {
     const form = new multiparty.Form();
+    console.log(AZURE_STORAGE_CONNECTION_STRING);
     const blobServiceClient = BlobServiceClient.fromConnectionString(
       AZURE_STORAGE_CONNECTION_STRING
     );
