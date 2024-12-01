@@ -11,7 +11,9 @@ const MediaCard = ({
   downloadLink,
   category,
   updateEndpoint,
+  deleteEndpoint,
   onEditComplete,
+  onDeleteComplete,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
@@ -88,6 +90,22 @@ const MediaCard = ({
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(deleteEndpoint, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      onDeleteComplete();
+    } catch (error) {
+      console.error('Error deleting data:', error);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2 p-3 w-[345px]">
       <img
@@ -153,9 +171,14 @@ const MediaCard = ({
             <p className="text-sm">{description}</p>
             <p className="text-sm">Category: {category}</p>
             <p className="text-sm">Uploaded at {dateUploaded}</p>
-            <button onClick={handleEdit} className="underline">
-              Edit
-            </button>
+            <div className="flex gap-2">
+              <button onClick={handleEdit} className="underline">
+                Edit
+              </button>
+              <button onClick={handleDelete} className="underline text-red-500">
+                Delete
+              </button>
+            </div>
           </>
         )}
       </div>
@@ -170,8 +193,11 @@ MediaCard.propTypes = {
   imgSrc: PropTypes.string.isRequired,
   dateUploaded: PropTypes.string.isRequired,
   downloadLink: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
   updateEndpoint: PropTypes.string.isRequired,
+  deleteEndpoint: PropTypes.string.isRequired,
   onEditComplete: PropTypes.func.isRequired,
+  onDeleteComplete: PropTypes.func.isRequired,
 };
 
 export { MediaCard };

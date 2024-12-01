@@ -15,8 +15,6 @@ const Photos = () => {
     { id: 10, name: 'Street', isSelected: false },
     { id: 11, name: 'Others', isSelected: false },
   ]);
-  const [imageSrc, setImageSrc] = useState(null);
-  const [documentSrcArray, setDocumentSrcArray] = useState([]);
   const [updateDocumentSrcArray, setUpdateDocumentSrcArray] = useState([]);
   const [metadata, setMetadata] = useState([]);
   const [imageSrcArray, setImageSrcArray] = useState([]);
@@ -148,6 +146,7 @@ const Photos = () => {
       ...image,
       imgSrc: imageSrcArray[index],
       updateEndpoint: updateDocumentSrcArray[index],
+      deleteEndpoint: `https://prod-12.northcentralus.logic.azure.com/workflows/14ffb6f9fbf54ef6ac82526d1ec9c46a/triggers/When_a_HTTP_request_is_received/paths/invoke/image/${image.filePath}/${image.fileId}?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=EEELveE8o7hD5TdGIbgjtA-g-lFFm0W8tfd1Lza2Jb4`,
     }));
 
     // Then, filter the mapped metadata based on the selected photo filters
@@ -181,7 +180,9 @@ const Photos = () => {
             downloadLink={image.imgSrc}
             updateEndpoint={image.updateEndpoint}
             category={image.category}
+            deleteEndpoint={image.deleteEndpoint}
             onEditComplete={fetchImageMetadata}
+            onDeleteComplete={fetchImageMetadata}
           />
         ))}
       </div>

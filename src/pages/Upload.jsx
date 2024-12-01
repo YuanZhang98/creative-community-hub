@@ -10,6 +10,15 @@ const Upload = () => {
   const [userID, setUserID] = useState('12345'); // Example UserID
   const [userName, setUserName] = useState('John Doe'); // Example UserName
 
+  const endpoints = {
+    photo:
+      'https://prod-22.northcentralus.logic.azure.com:443/workflows/f62344b13b8b40b38b3f994fa6b75a05/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=4Vj6Nyp4AprWNywpPlA7pfvGTyYHqSM5OiqabmZpMs0',
+    music:
+      'https://prod-14.northcentralus.logic.azure.com:443/workflows/7efbe10da8c441cc9500b4ee3ae39eee/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=HUbKxzHWwEH5eDayxoRx8JxYhJUD4oFg32v0U1LcOkw',
+    video:
+      'https://prod-30.northcentralus.logic.azure.com:443/workflows/8f11c16a00d64c958f565881fb0dd6f5/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=68Rmcj1SYW8d04sSD58gLZ6cBWGKJdaRnT1v6MHbx6s',
+  };
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -36,13 +45,10 @@ const Upload = () => {
     formData.append('CreatedDate', formattedDate);
 
     try {
-      const response = await fetch(
-        'https://prod-22.northcentralus.logic.azure.com:443/workflows/f62344b13b8b40b38b3f994fa6b75a05/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=4Vj6Nyp4AprWNywpPlA7pfvGTyYHqSM5OiqabmZpMs0',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      );
+      const response = await fetch(endpoints[fileType], {
+        method: 'POST',
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -59,10 +65,25 @@ const Upload = () => {
 
   return (
     <div className="p-4 w-full flex flex-col items-center">
-      <div className="flex flex-row gap-3 underline mb-4">
-        <button onClick={() => setFileType('photo')}>Upload Photo</button>
-        <button onClick={() => setFileType('music')}>Upload Music</button>
-        <button onClick={() => setFileType('video')}>Upload Video</button>
+      <div className="flex flex-row gap-3 mb-4">
+        <button
+          onClick={() => setFileType('photo')}
+          className={`px-4 py-2 ${fileType === 'photo' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+        >
+          Upload Photo
+        </button>
+        <button
+          onClick={() => setFileType('music')}
+          className={`px-4 py-2 ${fileType === 'music' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+        >
+          Upload Music
+        </button>
+        <button
+          onClick={() => setFileType('video')}
+          className={`px-4 py-2 ${fileType === 'video' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+        >
+          Upload Video
+        </button>
       </div>
 
       <form
