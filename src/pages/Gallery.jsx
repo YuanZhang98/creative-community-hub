@@ -10,8 +10,8 @@ const Gallery = () => {
   const currentlySelectedFilter = filters.find((filter) => filter.isSelected);
 
   return (
-    <div className='flex flex-col p-3 gap-3'>
-      <h1 className='text-3xl'>{currentlySelectedFilter?.name}</h1>
+    <div className="flex flex-col px-10 py-8 gap-3">
+      <h1 className="text-3xl">{currentlySelectedFilter?.name}</h1>
       <Filter filters={filters} onChange={setFilters} />
 
       {currentlySelectedFilter?.name === 'Photo' && <Photos />}
