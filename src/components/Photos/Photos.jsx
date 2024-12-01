@@ -11,9 +11,8 @@ const Photos = () => {
     { id: 6, name: 'Fashion', isSelected: false },
     { id: 7, name: 'Travel', isSelected: false },
     { id: 8, name: 'Headshot', isSelected: false },
-    { id: 9, name: 'Headshot', isSelected: false },
-    { id: 10, name: 'Street', isSelected: false },
-    { id: 11, name: 'Others', isSelected: false },
+    { id: 9, name: 'Street', isSelected: false },
+    { id: 10, name: 'Others', isSelected: false },
   ]);
   const [updateDocumentSrcArray, setUpdateDocumentSrcArray] = useState([]);
   const [metadata, setMetadata] = useState([]);
